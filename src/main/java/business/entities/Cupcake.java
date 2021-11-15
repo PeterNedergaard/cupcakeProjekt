@@ -2,6 +2,7 @@ package business.entities;
 
 public class Cupcake {
 
+    private String cupcakeId;
     private String bottomId;
     private String bottomName;
     private String toppingId;
@@ -18,6 +19,14 @@ public class Cupcake {
         this.userId = userId;
         this.orderId = orderId;
         this.price = price;
+    }
+
+    public String getCupcakeId() {
+        return cupcakeId;
+    }
+
+    public void setCupcakeId(String cupcakeId) {
+        this.cupcakeId = cupcakeId;
     }
 
     public String getBottomName() {

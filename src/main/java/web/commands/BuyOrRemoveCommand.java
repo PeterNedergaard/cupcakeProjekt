@@ -59,10 +59,6 @@ public class BuyOrRemoveCommand extends CommandProtectedPage{
         }
         request.getServletContext().setAttribute("totalBasketPrice", currentUser.getTotalBasketPrice());
 
-        for (Cupcake c : currentUser.getMyCupcakes()) {
-            System.out.println(c.getPrice());
-        }
-
         return REDIRECT_INDICATOR + "checkoutpage";
     }
 

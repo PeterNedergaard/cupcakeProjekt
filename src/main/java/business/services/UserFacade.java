@@ -1,11 +1,13 @@
 package business.services;
 
+import business.entities.Cupcake;
 import business.entities.User;
 import business.persistence.Database;
 import business.persistence.ProductMapper;
 import business.persistence.UserMapper;
 import business.exceptions.UserException;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class UserFacade
     ProductMapper productMapper;
 
     public static User currentUser;
+    public static ArrayList<User> userList;
 
     public UserFacade(Database database)
     {
@@ -51,7 +54,10 @@ public class UserFacade
 
     public void updateUserToDb(User user){
         userMapper.updateUserToDb(user);
-        System.out.println("im in userfacade ");
+    }
+
+    public void initMyCupcakeLists(ArrayList<Cupcake> cupcakeList){
+        userMapper.initMyCupcakeLists(cupcakeList);
     }
 
 

@@ -35,6 +35,7 @@ public abstract class Command
         commands.put("checkoutpage", new CommandProtectedPage("checkoutpage","customer"));
         commands.put("buyorremovecommand", new BuyOrRemoveCommand("","customer"));
         commands.put("orderscommand", new OrdersCommand("","employee"));
+        commands.put("deleteordercommand", new DeleteOrderCommand("","employee"));
     }
 
     public static Command fromPath(

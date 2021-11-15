@@ -4,6 +4,7 @@ import business.entities.Cupcake;
 import business.entities.Product;
 import business.entities.User;
 import business.exceptions.UserException;
+import business.services.UserFacade;
 
 import java.sql.*;
 import java.sql.Connection;
@@ -106,16 +107,16 @@ public class ProductMapper {
         return price;
     }
 
-    public static String getProductNameById(int productId){
+    public static String getProductNameById(int productId) {
         for (Product p : getAllProducts()) {
-            if (p.getIdProduct() == productId){
+            if (p.getIdProduct() == productId) {
                 return p.getProductName();
             }
         }
         return "no name";
     }
 
-    public static void uploadCupcake(Cupcake cupcake){
+    public static void uploadCupcake(Cupcake cupcake) {
 
         try (Connection connection = database.connect()) {
             String sql = "INSERT INTO cupcakes (bottomid,toppingid,amount,userid,orderid,price) VALUES (?, ?, ?, ?, ?, ?)";
@@ -136,7 +137,54 @@ public class ProductMapper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static ArrayList<Cupcake> getAllCupcakes() {
+        ArrayList<Cupcake> cupcakeList = new ArrayList();
+
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM cupcakes";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String idCupcakes = rs.getString("idcupcakes");
+                    String bottomId = rs.getString("bottomid");
+                    String toppingId = rs.getString("toppingid");
+                    int amount = rs.getInt("amount");
+                    int userId = rs.getInt("userid");
+                    int orderId = rs.getInt("orderid");
+                    int price = rs.getInt("price");
+
+                    Cupcake cupcake = new Cupcake(bottomId, toppingId, amount, userId, orderId, price);
+                    cupcake.setCupcakeId(idCupcakes);
+                    cupcakeList.add(cupcake);
+                }
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return cupcakeList;
+    }
+
+    public static void deleteCupcake(int cupcakeId) {
+
+        try (Connection connection = database.connect()) {
+            String sql = "DELETE FROM cupcakes WHERE idcupcakes=?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, cupcakeId);
+
+                ps.executeUpdate();
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
+
 
 }

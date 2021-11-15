@@ -26,7 +26,10 @@ public class LoginCommand extends CommandUnprotectedPage
 
         try {
         User user = userFacade.login(email, password);
+
         UserFacade.currentUser = user;
+        UserFacade.userList = userFacade.getUserList();
+
         request.getServletContext().setAttribute("currentuserbalance",user.getBalance());
 
         HttpSession session = request.getSession();

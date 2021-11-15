@@ -1,6 +1,9 @@
 package business.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class User
 {
@@ -21,7 +24,24 @@ public class User
 
     private ArrayList<Cupcake> basketList = new ArrayList<>();
     private ArrayList<Cupcake> myCupcakes = new ArrayList<>();
+    private Set<Integer> orderIdList = new TreeSet<>();
     private int totalBasketPrice;
+
+    public void addToOrderIdList(int orderId){
+        orderIdList.add(orderId);
+    }
+
+    public Set<Integer> getOrderIdList() {
+        return orderIdList;
+    }
+
+    public void setOrderIdList(Set<Integer> orderIdList) {
+        this.orderIdList = orderIdList;
+    }
+
+    public void addtoMyCupcakes(Cupcake cupcake){
+        myCupcakes.add(cupcake);
+    }
 
     public void addToBasketList(Cupcake cupcake){
         basketList.add(cupcake);

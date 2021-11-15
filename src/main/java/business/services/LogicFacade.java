@@ -6,6 +6,7 @@ import business.entities.User;
 import business.persistence.ProductMapper;
 import business.persistence.UserMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LogicFacade {
@@ -26,5 +27,16 @@ public class LogicFacade {
         ProductMapper.uploadCupcake(cupcake);
     }
 
+    public static ArrayList<Cupcake> getAllCupcakes(){
+        return ProductMapper.getAllCupcakes();
+    }
+
+    public static void deleteCupcake(int cupcakeId){
+        ProductMapper.deleteCupcake(cupcakeId);
+    }
+
 
 }
+
+
+

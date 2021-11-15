@@ -1,7 +1,10 @@
 package business.persistence;
 
+import business.entities.Cupcake;
 import business.exceptions.UserException;
 import business.entities.User;
+import business.services.LogicFacade;
+import business.services.UserFacade;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,8 +119,6 @@ public class UserMapper {
                 ps.setInt(2, user.getBalance());
                 ps.setInt(3, user.getId());
 
-                System.out.println(user.getId());
-
                 ps.executeUpdate();
 
             } catch (SQLException throwables) {
@@ -126,6 +127,24 @@ public class UserMapper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void initMyCupcakeLists(ArrayList<Cupcake> cupcakeList){
+
+        for (Cupcake c : cupcakeList) {
+            for (User u : UserFacade.userList) {
+                if (c.getUserId() == u.getId()){
+                    u.addtoMyCupcakes(c);
+                    c.setBottomName(LogicFacade.getProductNameById(Integer.parseInt(c.getBottomId())));
+                    c.setToppingName(LogicFacade.getProductNameById(Integer.parseInt(c.getToppingId())));
+
+                    u.addToOrderIdList(c.getOrderId());
+
+                    break;
+                }
+            }
+        }
+
 
     }
 

@@ -10,7 +10,6 @@
     String topping = cupcake.getToppingName();
     String bottom = cupcake.getBottomName();
     int price = cupcake.getPrice();
-
     pageContext.setAttribute("topping", topping);
     pageContext.setAttribute("bottom", bottom);
     pageContext.setAttribute("price", price);
@@ -30,44 +29,57 @@
 
             <c:forEach var="customer" items="${applicationScope.customerList}" varStatus="loop">
 
-                <h3 align="center">#${loop.index+1}</h3>
-                <h5 align="center">Name: ${customer.email}</h5>
+                <c:if test="${customer.role.equals('customer')}">
 
-                <c:forEach var="orderid" begin="0" end="${customer.orderId-1}">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Topping</th>
-                            <th scope="col">Bottom</th>
-                            <th scope="col">Price</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <h3 align="center">#${loop.index+1}</h3>
+                    <h5 align="center">Email: ${customer.email}</h5>
+
+                    <c:forEach var="orderid" items="${customer.orderIdList}">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID#</th>
+                                <th scope="col">Topping</th>
+                                <th scope="col">Bottom</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
 
-                        <c:forEach var="cupcake" items="${customer.myCupcakes}" varStatus="loop">
+                            <c:forEach var="cupcake" items="${customer.myCupcakes}" varStatus="loop">
 
-                            <c:set var="topping" value="${cupcake.toppingName}"/>
-                            <c:set var="bottom" value="${cupcake.bottomName}"/>
-                            <c:set var="price" value="${cupcake.price}"/>
+                            <form action="${pageContext.request.contextPath}/fc/deleteordercommand" method="POST">
+                                <c:if test="${cupcake.orderId == orderid}">
 
-                        <tr>
-                            <th scope="row">${loop.index-1}</th>
-                            <td><c:out value="${topping}"/></td>
-                            <td><c:out value="${bottom}"/></td>
-                            <td><c:out value="${price}"/></td>
-                        </tr>
+                                    <c:set var="topping" value="${cupcake.toppingName}"/>
+                                    <c:set var="bottom" value="${cupcake.bottomName}"/>
+                                    <c:set var="price" value="${cupcake.price}"/>
 
-                        </c:forEach>
-                    </table>
+                                <tr>
+                                    <th scope="row">${cupcake.cupcakeId}</th>
+                                    <td><c:out value="${topping}"/></td>
+                                    <td><c:out value="${bottom}"/></td>
+                                    <td><c:out value="${price}"/></td>
+                                </tr>
+                                </c:if>
 
-                    <div class="col text-center">
-                        <input style="padding-left: 20px; padding-right: 20px" class="btn btn-primary" type="submit"
-                               value="Delete">
-                    </div>
-                    <br><br>
-                </c:forEach>
+                                </c:forEach>
+                        </table>
+
+                        <div class="col text-center">
+                            <input style="padding-left: 20px; padding-right: 20px" class="btn btn-primary"
+                                   type="submit"
+                                   value="Delete">
+                            <input hidden name="customerid" value="${customer.id}">
+                            <input hidden name="orderid" value="${orderid}">
+                        </div>
+                        <br><br>
+
+                        </form>
+                    </c:forEach>
+                </c:if>
             </c:forEach>
 
 
@@ -79,5 +91,3 @@
         </div>
     </jsp:body>
 </t:genericpage>
-
-

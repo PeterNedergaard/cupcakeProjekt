@@ -1,6 +1,7 @@
 package web.commands;
 
 import business.entities.User;
+import business.services.LogicFacade;
 import business.services.UserFacade;
 import business.exceptions.UserException;
 
@@ -28,9 +29,15 @@ public class LoginCommand extends CommandUnprotectedPage
         User user = userFacade.login(email, password);
 
         UserFacade.currentUser = user;
-        UserFacade.userList = userFacade.getUserList();
+
+        //UserFacade.userList = userFacade.getCustomerList();
+
+        /*if (user.getRole().equals("employee")) {
+            userFacade.initMyCupcakeLists(LogicFacade.getAllCupcakes());
+        }*/
 
         request.getServletContext().setAttribute("currentuserbalance",user.getBalance());
+        request.getServletContext().setAttribute("customerList", UserFacade.userList);
 
         HttpSession session = request.getSession();
 

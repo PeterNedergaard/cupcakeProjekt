@@ -12,35 +12,25 @@
         <div style="margin-top: 5em;">
             <h1>Customers</h1>
 
-            <form name="vieworder" action="${pageContext.request.contextPath}/fc/vieworderpage" method="POST">
+            <form action="${pageContext.request.contextPath}/fc/viewcustomerorderscommand" method="POST">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Lastname</th>
-                        <th scope="col">CustomerID</th>
+                        <th scope="col">ID#</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Edit</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Kurt</td>
-                        <td>Hansen</td>
-                        <td>1</td>
-                        <td><input class="btn btn-primary" type="submit" value="View orders"></td>
-                    </tr>
-                    <tr>
-                        <td>Jørgen</td>
-                        <td>Jensen</td>
-                        <td>2</td>
-                        <td><input class="btn btn-primary" type="submit" value="View orders"></td>
-                    </tr>
-                    <tr>
-                        <td>Bo</td>
-                        <td>Ibsen</td>
-                        <td>3</td>
-                        <td><input class="btn btn-primary" type="submit" value="View orders"></td>
-                    </tr>
+
+                    <c:forEach var="customer" items="${applicationScope.customerList}">
+                        <tr>
+                            <td>${customer.id}</td>
+                            <td>${customer.email}</td>
+                            <td><button class="btn btn-primary" type="submit" name="vieworder" value="${customer.id}">View orders</button></td>
+                        </tr>
+                    </c:forEach>
+
                     </tbody>
                 </table>
             </form>

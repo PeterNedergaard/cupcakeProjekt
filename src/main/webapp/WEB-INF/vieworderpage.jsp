@@ -10,84 +10,61 @@
     </jsp:attribute>
     <jsp:body>
         <div style="margin-top: 5em;">
-            <h1>Viewing all orders from Kurt</h1>
+            <h1>Viewing all orders from: ${applicationScope.email}</h1>
             <br><br>
 
-            <h3>1#</h3>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Topping</th>
-                    <th scope="col">Bottom</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Chocolate</td>
-                    <td>Chocolate</td>
-                    <td>5$</td>
-                    <td><input class="btn btn-primary" type="submit" value="Delete" style="background-color: #B94444; border-color: #B94444"></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Blueberry</td>
-                    <td>Vanilla</td>
-                    <td>5$</td>
-                    <td><input class="btn btn-primary" type="submit" value="Delete" style="background-color: #B94444; border-color: #B94444"></td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>10$</td>
-                </tr>
-                </tbody>
-            </table>
-            <h5 align="center">Afhentning: Mandag kl. 14</h5>
-
+            <h3 align="center">ID#${applicationScope.id}</h3>
             <br>
 
-            <h3>#2</h3>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Topping</th>
-                    <th scope="col">Bottom</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Strawberry</td>
-                    <td>Vanilla</td>
-                    <td>5$</td>
-                    <td><input class="btn btn-primary" type="submit" value="Delete" style="background-color: #B94444; border-color: #B94444"></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Blueberry</td>
-                    <td>Chocolate</td>
-                    <td>5$</td>
-                    <td><input class="btn btn-primary" type="submit" value="Delete" style="background-color: #B94444; border-color: #B94444"></td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>10$</td>
-                </tr>
-                </tbody>
-            </table>
-            <h5 align="center">Afhentning: Tirsdag kl. 14</h5>
+            <c:forEach var="orderid" items="${applicationScope.orderidlist}" varStatus="loop">
+                <c:set var="totalprice" value="${0}"/>
+
+                <h5 align="center">Order #${loop.index+1}</h5>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID#</th>
+                        <th scope="col">Topping</th>
+                        <th scope="col">Bottom</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <c:forEach var="cupcake" items="${applicationScope.cupcakelist}" varStatus="loop">
+
+                    <c:if test="${cupcake.orderId == orderid}">
+
+                        <c:set var="topping" value="${cupcake.toppingName}"/>
+                        <c:set var="bottom" value="${cupcake.bottomName}"/>
+                        <c:set var="price" value="${cupcake.price}"/>
+
+                    <tr>
+                        <th scope="row">${cupcake.cupcakeId}</th>
+                        <td><c:out value="${topping}"/></td>
+                        <td><c:out value="${bottom}"/></td>
+                        <td><c:out value="${price}$"/></td>
+                    </tr>
+                        <c:set var="totalprice" value="${totalprice + price}"/>
+                    </c:if>
+
+                    </c:forEach>
+
+                    <tr>
+                        <th>Total</th>
+                        <td></td>
+                        <td></td>
+                        <th>${totalprice}$</th>
+                    </tr>
+
+                </table>
+                <br>
+            </c:forEach>
+
+
+            <h5 align="center">Afhentning: Mandag kl. 14</h5>
+
 
             <c:if test="${requestScope.error != null }">
                 <p style="color:red">

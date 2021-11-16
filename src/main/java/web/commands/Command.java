@@ -2,6 +2,7 @@ package web.commands;
 
 import business.exceptions.UserException;
 import business.persistence.Database;
+import business.services.LogicFacade;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +35,10 @@ public abstract class Command
         commands.put("addcupcakecommand", new AddCupcakeCommand("","customer"));
         commands.put("checkoutpage", new CommandProtectedPage("checkoutpage","customer"));
         commands.put("buyorremovecommand", new BuyOrRemoveCommand("","customer"));
-        commands.put("orderscommand", new OrdersCommand("","employee"));
+        commands.put("firstcommand", new FirstCommand(""));
         commands.put("deleteordercommand", new DeleteOrderCommand("","employee"));
+        commands.put("viewcustomerorderscommand", new ViewCustomerOrdersCommand("","employee"));
+        commands.put("first", new CommandUnprotectedPage("first"));
     }
 
     public static Command fromPath(

@@ -131,21 +131,31 @@ public class UserMapper {
 
     public void initMyCupcakeLists(ArrayList<Cupcake> cupcakeList){
 
-        for (Cupcake c : cupcakeList) {
-            for (User u : UserFacade.userList) {
-                if (c.getUserId() == u.getId()){
-                    u.addtoMyCupcakes(c);
-                    c.setBottomName(LogicFacade.getProductNameById(Integer.parseInt(c.getBottomId())));
-                    c.setToppingName(LogicFacade.getProductNameById(Integer.parseInt(c.getToppingId())));
+        for (User u : UserFacade.userList) {
+            if (u.getMyCupcakes().size() < 1) {
+                for (Cupcake c : cupcakeList) {
+                    if (c.getUserId() == u.getId()) {
+                        u.addtoMyCupcakes(c);
+                        c.setBottomName(LogicFacade.getProductNameById(Integer.parseInt(c.getBottomId())));
+                        c.setToppingName(LogicFacade.getProductNameById(Integer.parseInt(c.getToppingId())));
 
-                    u.addToOrderIdList(c.getOrderId());
-
-                    break;
+                        u.addToOrderIdList(c.getOrderId());
+                    }
                 }
             }
         }
+    }
 
+    public ArrayList<User> getCustomerList(){
+        ArrayList<User> customerList = new ArrayList<>();
 
+        for (User u : getUserList()) {
+            if (u.getRole().equals("customer")){
+                customerList.add(u);
+            }
+        }
+
+        return customerList;
     }
 
 

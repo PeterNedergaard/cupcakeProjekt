@@ -13,7 +13,6 @@
     <location>/errorpage.jsp</location>
   </error-page>
 
-
   <error-page>
     <error-code>401</error-code>
     <location>/errorpage.jsp</location>

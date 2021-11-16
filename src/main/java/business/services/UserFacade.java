@@ -52,6 +52,10 @@ public class UserFacade
         return null;
     }
 
+    public ArrayList<User> getCustomerList(){
+        return userMapper.getCustomerList();
+    }
+
     public void updateUserToDb(User user){
         userMapper.updateUserToDb(user);
     }

@@ -34,7 +34,13 @@
                     <h3 align="center">#${loop.index+1}</h3>
                     <h5 align="center">Email: ${customer.email}</h5>
 
-                    <c:forEach var="orderid" items="${customer.orderIdList}">
+                    <br>
+
+                    <c:forEach var="orderid" items="${customer.orderIdList}" varStatus="orderloop">
+
+                        <h5 align="center">Order #${orderloop.index+1}</h5>
+
+                        <c:set var="totalprice" value="${0}"/>
 
                         <table class="table table-striped">
                             <thead>
@@ -61,11 +67,18 @@
                                     <th scope="row">${cupcake.cupcakeId}</th>
                                     <td><c:out value="${topping}"/></td>
                                     <td><c:out value="${bottom}"/></td>
-                                    <td><c:out value="${price}"/></td>
+                                    <td><c:out value="${price}$"/></td>
                                 </tr>
+                                    <c:set var="totalprice" value="${totalprice + price}"/>
                                 </c:if>
 
                                 </c:forEach>
+                                <tr>
+                                    <th>Total</th>
+                                    <td></td>
+                                    <td></td>
+                                    <th>${totalprice}$</th>
+                                </tr>
                         </table>
 
                         <div class="col text-center">
@@ -80,6 +93,7 @@
                         </form>
                     </c:forEach>
                 </c:if>
+                <br>
             </c:forEach>
 
 
